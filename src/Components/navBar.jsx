@@ -1,10 +1,20 @@
 // components/Navbar.jsx
-import { useState } from "react";
+import { use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { GiPlantRoots } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
+import AuthContext from "../Authentication With FireBase/AuthContext";
 
 const Navbar = () => {
+
+
+  const handleLogout = () => {
+    console.log('logout');
+  }
+
+  const userData = use(AuthContext);
+  const {user} = userData;
+  // console.log(user);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -69,18 +79,32 @@ const Navbar = () => {
             </p>
             
           ))}
-        <Link
-            to="/login"
-            className="btn bg-green-600 text-white hover:bg-green-700 rounded px-4 py-2 font-semibold"
-          >
-            Log In
-          </Link>
-          <Link
-            to="/register"
-            className="btn bg-green-100 text-green-800 border border-green-500 hover:bg-green-200 rounded px-4 py-2 font-semibold"
-          >
-            Sign Up
-          </Link>
+        {
+  user ? (
+    <button
+      onClick={handleLogout}
+      className="btn bg-green-100 text-green-800 border border-green-500 hover:bg-green-200 rounded px-4 py-2 font-semibold"
+    >
+      Log Out
+    </button>
+  ) : (
+    <>
+      <Link
+        to="/login"
+        className="btn bg-green-600 text-white hover:bg-green-700 rounded px-4 py-2 font-semibold"
+      >
+        Log In
+      </Link>
+      <Link
+        to="/register"
+        className="btn bg-green-100 text-green-800 border border-green-500 hover:bg-green-200 rounded px-4 py-2 font-semibold"
+      >
+        Sign Up
+      </Link>
+    </>
+  )
+}
+
         </div>
       )}
     </nav>

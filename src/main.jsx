@@ -11,6 +11,7 @@ import LogIn from './Pages/LogIn';
 import Register from './Pages/Register';
 import AddPlant from './Pages/addPlant';
 import ErrorPage from './Pages/errorPage';
+import Authprovider from './Authentication With FireBase/AuthProvider';
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Authprovider>
+      <RouterProvider router={router} />
+      </Authprovider>
   </StrictMode>,
 )

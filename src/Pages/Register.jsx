@@ -1,22 +1,66 @@
 
+import { use } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import AuthContext from "../Authentication With FireBase/AuthContext";
+import Swal from 'sweetalert2';
 
 
 const Register = () => {
+
+  const user = use(AuthContext);
+  const {createAccount,signInWithGoogle}=user;
   
 
 
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log("Registering with:");
-    // Add registration logic here
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const photoURL = e.target.photoURL.value;
+    // console.log(name, email, password, photoURL);
+
+    createAccount(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log('successfully registered user', user);  
+        
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: error.message,
+          confirmButtonColor: '#dc2626'
+        });
+      });
+
   };
 
   const handleGoogleRegister = () => {
-    console.log("Google registration clicked");
-    // Add Google auth logic here
+    signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful',
+          text: 'Welcome to Plant Tracker!',
+          confirmButtonColor: '#16a34a'
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: error.message,
+          confirmButtonColor: '#dc2626'
+        });
+      });
   };
 
   return (
@@ -26,6 +70,8 @@ const Register = () => {
           Register for Plant Tracker
         </h2>
         <form onSubmit={handleRegister} className="space-y-4">
+
+          {/* name */}
           <div>
             <label className="block text-sm font-medium text-green-900">
               Name
@@ -39,6 +85,9 @@ const Register = () => {
               
             />
           </div>
+
+
+          {/* email */}
           <div>
             <label className="block text-sm font-medium text-green-900">
               Email
@@ -52,6 +101,9 @@ const Register = () => {
               
             />
           </div>
+
+
+          {/* photo url */}
           <div>
             <label className="block text-sm font-medium text-green-900">
               Photo URL
@@ -64,6 +116,9 @@ const Register = () => {
               
             />
           </div>
+
+
+          {/* password */}
           <div>
             <label className="block text-sm font-medium text-green-900">
               Password
@@ -85,6 +140,8 @@ const Register = () => {
         </form>
 
         <div className="divider">OR</div>
+
+        {/* Google registration button */}
 
         <button
           onClick={handleGoogleRegister}
