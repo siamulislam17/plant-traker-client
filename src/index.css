@@ -1,2 +1,11 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui"{
+  themes: light --default;
+  
+ }
+
+ .active {
+  font-weight: bold;
+  color: green;
+  transition: .25s ease-in-out;
+}
