@@ -4,12 +4,20 @@ import { Link, NavLink } from "react-router";
 import { GiPlantRoots } from "react-icons/gi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import AuthContext from "../Authentication With FireBase/AuthContext";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
 
-
+  const UserData = use(AuthContext);
+  const {logOut} = UserData;
   const handleLogout = () => {
-    console.log('logout');
+    logOut();
+    Swal.fire({
+      icon: 'success',
+      title: 'Logout Successful',
+      text: 'You have successfully logged out.',
+      confirmButtonColor: '#16a34a'
+    });
   }
 
   const userData = use(AuthContext);

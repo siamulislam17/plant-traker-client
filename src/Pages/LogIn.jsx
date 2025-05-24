@@ -1,20 +1,61 @@
 
 
+import { use } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import AuthContext from "../Authentication With FireBase/AuthContext";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
-
+  const userData =use(AuthContext);
+  const {LogIn,signInWithGoogle} = userData;
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Logging in with:");
-    // Add login logic here
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    LogIn(email, password)
+    .then((result) => {
+      const user = result.user;
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'Welcome to Plant Tracker!',
+        confirmButtonColor: '#16a34a'
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: error.message,
+          confirmButtonColor: '#dc2626'
+        });
+      });
+    })
   };
 
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
-    // Add Google auth logic here
+    signInWithGoogle()
+          .then((result) => {
+            const user = result.user;
+            console.log(user);
+            Swal.fire({
+              icon: 'success',
+              title: 'Registration Successful',
+              text: 'Welcome to Plant Tracker!',
+              confirmButtonColor: '#16a34a'
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Registration Failed',
+              text: error.message,
+              confirmButtonColor: '#dc2626'
+            });
+          });
   };
 
   return (
