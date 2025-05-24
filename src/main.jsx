@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import LogIn from './Pages/LogIn';
 import Register from './Pages/Register';
 import AddPlant from './Pages/addPlant';
+import ErrorPage from './Pages/errorPage';
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/add-plant",
         element: <AddPlant></AddPlant>,
+      },
+      {
+        path:'/*',
+        element:<ErrorPage></ErrorPage>
       }
       
     ]
