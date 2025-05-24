@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 const Register = () => {
 
   const user = use(AuthContext);
-  const {createAccount,signInWithGoogle}=user;
+  const {createAccount,signInWithGoogle,updateProfileData}=user;
   
 
 
@@ -21,13 +21,20 @@ const Register = () => {
     const password = e.target.password.value;
     const photoURL = e.target.photoURL.value;
     // console.log(name, email, password, photoURL);
-
+   
     createAccount(email, password)
-      .then((result) => {
-        const user = result.user;
-        console.log('successfully registered user', user);  
-        
-      })
+  .then((result) => {
+    const user = result.user;
+    return updateProfileData(name, photoURL).then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful',
+        text: `Welcome ${user.displayName} to Plant Tracker!`,
+        confirmButtonColor: '#16a34a'
+      });
+    });
+  })
+
       .catch((error) => {
         console.log(error);
         Swal.fire({

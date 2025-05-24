@@ -12,6 +12,7 @@ import Register from './Pages/Register';
 import AddPlant from './Pages/addPlant';
 import ErrorPage from './Pages/errorPage';
 import Authprovider from './Authentication With FireBase/AuthProvider';
+import PrivateRoute from './Authentication With FireBase/PrivateRoute';
 
 
 const router = createBrowserRouter([
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-plant",
-        element: <AddPlant></AddPlant>,
+        element: <PrivateRoute>
+          <AddPlant></AddPlant>
+        </PrivateRoute>,
       },
       {
         path:'/*',

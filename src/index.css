@@ -1,11 +1,42 @@
 @import "tailwindcss";
 @plugin "daisyui"{
   themes: light --default;
+ 
   
  }
+  @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
 
  .active {
   font-weight: bold;
   color: green;
   transition: .25s ease-in-out;
+}
+
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rancho {
+  font-family: "Rancho", cursive;
+
+  font-style: normal;
 }

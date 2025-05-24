@@ -7,6 +7,8 @@ import AuthContext from "../Authentication With FireBase/AuthContext";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
+
+  
   const userData =use(AuthContext);
   const {LogIn,signInWithGoogle} = userData;
 

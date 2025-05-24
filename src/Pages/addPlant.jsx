@@ -1,9 +1,47 @@
+import Swal from "sweetalert2";
 
 
 const addPlant = () => {
+
+  
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add form submission logic here
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        console.log(data);
+
+        
+
+        fetch('http://localhost:3000/plants', {
+
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.insertedId){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Plant added successfully',
+                    confirmButtonColor: '#16a34a'
+                })
+                e.target.reset();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+                confirmButtonColor: '#dc2626'
+            })
+        });
     };
 
   return (

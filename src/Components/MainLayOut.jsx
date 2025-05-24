@@ -7,10 +7,12 @@ const MaunLayOut = () => {
     return (
         <div>
             <NavBar></NavBar>
-            <div>
+            <div className='min-h-screen'>
                 <Outlet></Outlet>
             </div>
-            <Footer></Footer>
+            <footer >
+                <Footer></Footer>
+            </footer>
         </div>
     );
 };
