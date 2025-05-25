@@ -15,7 +15,9 @@ import Authprovider from './Authentication With FireBase/AuthProvider';
 import PrivateRoute from './Authentication With FireBase/PrivateRoute';
 import AllPlants from './Pages/AllPlants';
 import PlantsDetails from './Pages/plantsDetails';
-import MyPlants from './MyPlants';
+import myplants from './Pages/MyPlants';
+import UpdatePage from './Pages/UpdatePage';
+
 
 const router = createBrowserRouter([
   {
@@ -66,8 +68,15 @@ const router = createBrowserRouter([
           return fetch('http://localhost:3000/plants')
         },
         element: <PrivateRoute>
-          <MyPlants></MyPlants>
+          <myplants></myplants>
         </PrivateRoute>,
+      },
+      {
+        path: '/update/:id',
+        loader: async () => {
+          return fetch('http://localhost:3000/plants')
+        },
+        element: <UpdatePage></UpdatePage>
       }
       
     ]

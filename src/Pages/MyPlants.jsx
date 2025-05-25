@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import AuthContext from '../Authentication With FireBase/AuthContext';
 
 const MyPlants = () => {
   const initialPlants = useLoaderData();
+ 
+  const {user} =use(AuthContext);
+  
+  
+
+   
   const [plants, setPlants] = useState(initialPlants);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if (user) {
+      const myPlants = initialPlants.filter((plant) => plant.userEmail === user.email);
+      setPlants(myPlants);
+
+    }
+  },[user,initialPlants])
 
   const handleDelete = (id) => {
     Swal.fire({
