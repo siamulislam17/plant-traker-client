@@ -13,6 +13,7 @@ import AddPlant from './Pages/addPlant';
 import ErrorPage from './Pages/errorPage';
 import Authprovider from './Authentication With FireBase/AuthProvider';
 import PrivateRoute from './Authentication With FireBase/PrivateRoute';
+import AllPlants from './Pages/AllPlants';
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,13 @@ const router = createBrowserRouter([
       {
         path:'/*',
         element:<ErrorPage></ErrorPage>
+      },
+      {
+        path: "/plants",
+        loader: async () => {
+          return fetch('http://localhost:3000/plants')
+        },
+        element: <AllPlants></AllPlants>
       }
       
     ]
