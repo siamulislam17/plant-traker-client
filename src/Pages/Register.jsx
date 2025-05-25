@@ -1,7 +1,7 @@
 
 import { use } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import AuthContext from "../Authentication With FireBase/AuthContext";
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,10 @@ const Register = () => {
   const user = use(AuthContext);
   const {createAccount,signInWithGoogle,updateProfileData}=user;
   
+   const navigate = useNavigate();
+  const location = useLocation();
 
+  const from = location.state?.from?.pathname || "/";
 
 
   const handleRegister = (e) => {
@@ -32,6 +35,7 @@ const Register = () => {
         text: `Welcome ${user.displayName} to Plant Tracker!`,
         confirmButtonColor: '#16a34a'
       });
+       navigate(from, { replace: true });
     });
   })
 
@@ -58,6 +62,7 @@ const Register = () => {
           text: 'Welcome to Plant Tracker!',
           confirmButtonColor: '#16a34a'
         });
+         navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);

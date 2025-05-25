@@ -2,28 +2,37 @@
 
 import { use } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import AuthContext from "../Authentication With FireBase/AuthContext";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
 
+   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
+
   
   const userData =use(AuthContext);
   const {LogIn,signInWithGoogle} = userData;
 
-  const handleLogin = (e) => {
+   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    
     LogIn(email, password)
-    .then((result) => {
-      const user = result.user;
-      Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome to Plant Tracker!',
-        confirmButtonColor: '#16a34a'
+      .then((result) => {
+        const user = result.user;
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'Welcome to Plant Tracker!',
+          confirmButtonColor: '#16a34a'
+        });
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -34,30 +43,30 @@ const LoginPage = () => {
           confirmButtonColor: '#dc2626'
         });
       });
-    })
   };
 
   const handleGoogleLogin = () => {
     signInWithGoogle()
-          .then((result) => {
-            const user = result.user;
-            console.log(user);
-            Swal.fire({
-              icon: 'success',
-              title: 'Registration Successful',
-              text: 'Welcome to Plant Tracker!',
-              confirmButtonColor: '#16a34a'
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Registration Failed',
-              text: error.message,
-              confirmButtonColor: '#dc2626'
-            });
-          });
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'Welcome to Plant Tracker!',
+          confirmButtonColor: '#16a34a'
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: error.message,
+          confirmButtonColor: '#dc2626'
+        });
+      });
   };
 
   return (
