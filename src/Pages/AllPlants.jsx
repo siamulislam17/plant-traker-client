@@ -6,8 +6,8 @@ const AllPlants = () => {
   const plants = useLoaderData();
 
   return (
-    <div className="p-4">
-      <h2 className="text-3xl font-bold text-center text-green-700 mb-6">All Plants</h2>
+    <div className="p-4 pt-20">
+      <h2 className="text-3xl font-bold text-center rancho text-green-700 mb-6">All Plants</h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full ">
           <thead className="bg-green-100">
@@ -31,7 +31,7 @@ const AllPlants = () => {
                 <td>{plant.category}</td>
                 <td>{plant.wateringFrequency}</td>
                 <td>
-                  <Link to={`/plant/${plant._id}`}>
+                  <Link to={`/plants/${plant._id}`}>
                     <button className="btn btn-sm btn-outline btn-success flex items-center gap-2">
                       <FaEye /> View Details
                     </button>

@@ -14,7 +14,8 @@ import ErrorPage from './Pages/errorPage';
 import Authprovider from './Authentication With FireBase/AuthProvider';
 import PrivateRoute from './Authentication With FireBase/PrivateRoute';
 import AllPlants from './Pages/AllPlants';
-
+import PlantsDetails from './Pages/plantsDetails';
+import MyPlants from './MyPlants';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,24 @@ const router = createBrowserRouter([
           return fetch('http://localhost:3000/plants')
         },
         element: <AllPlants></AllPlants>
+      },
+      {
+        path: "/plants/:id",
+        loader: async ({ params }) => {
+          return fetch(`http://localhost:3000/plants/${params.id}`)
+        },
+        element: <PrivateRoute>
+          <PlantsDetails></PlantsDetails>
+        </PrivateRoute>,
+      },
+      {
+        path: "/my-plants",
+        loader: async () => {
+          return fetch('http://localhost:3000/myplants')
+        },
+        element: <PrivateRoute>
+          <MyPlants></MyPlants>
+        </PrivateRoute>,
       }
       
     ]

@@ -7,7 +7,7 @@ const MaunLayOut = () => {
     return (
         <div>
             <NavBar></NavBar>
-            <div className='min-h-screen'>
+            <div className='pt-15 min-h-screen'>
                 <Outlet></Outlet>
             </div>
             <footer >
