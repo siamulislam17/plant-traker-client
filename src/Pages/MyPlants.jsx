@@ -1,27 +1,23 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { use, useEffect, useState,  } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import AuthContext from '../Authentication With FireBase/AuthContext';
 
 const MyPlants = () => {
   const initialPlants = useLoaderData();
- 
-  const {user} =use(AuthContext);
-  
-  
-
-   
-  const [plants, setPlants] = useState(initialPlants);
+  const { user } = use(AuthContext); 
+  const [plants, setPlants] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if (user) {
+  // Filter plants based on logged-in user
+  useEffect(() => {
+    if (user && initialPlants) {
       const myPlants = initialPlants.filter((plant) => plant.userEmail === user.email);
       setPlants(myPlants);
-
     }
-  },[user,initialPlants])
+  }, [user, initialPlants]);
 
+  // Delete plant
   const handleDelete = (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -40,13 +36,14 @@ const MyPlants = () => {
           .then((data) => {
             if (data.deletedCount > 0) {
               Swal.fire('Deleted!', 'Your plant has been deleted.', 'success');
-              setPlants(plants.filter((plant) => plant._id !== id));
+              setPlants((prevPlants) => prevPlants.filter((plant) => plant._id !== id));
             }
           });
       }
     });
   };
 
+  // Navigate to update page
   const handleUpdate = (id) => {
     navigate(`/update/${id}`);
   };
@@ -66,31 +63,36 @@ const MyPlants = () => {
             </tr>
           </thead>
           <tbody>
-            {plants.map((plant) => (
-              <tr key={plant._id}>
-                <td>
-                  <img src={plant.image} alt={plant.name} className="w-16 h-16 object-cover rounded" />
-                </td>
-                <td>{plant.name}</td>
-                <td>{plant.category}</td>
-                <td>{plant.wateringFrequency}</td>
-                <td>
-                  <button
-                    onClick={() => handleUpdate(plant._id)}
-                    className="btn btn-sm btn-outline btn-info mr-2"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDelete(plant._id)}
-                    className="btn btn-sm btn-outline btn-error"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {plants.length === 0 && (
+            {plants.length > 0 ? (
+              plants.map((plant) => (
+                <tr key={plant._id}>
+                  <td>
+                    <img
+                      src={plant.image}
+                      alt={plant.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  </td>
+                  <td>{plant.name}</td>
+                  <td>{plant.category}</td>
+                  <td>{plant.wateringFrequency}</td>
+                  <td>
+                    <button
+                      onClick={() => handleUpdate(plant._id)}
+                      className="btn btn-sm btn-outline btn-info mr-2"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(plant._id)}
+                      className="btn btn-sm btn-outline btn-error"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
                 <td colSpan="5" className="text-center py-4 text-gray-500">
                   No plants found.
