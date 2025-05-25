@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "/my-plants",
         loader: async () => {
-          return fetch('http://localhost:3000/myplants')
+          return fetch('http://localhost:3000/plants')
         },
         element: <PrivateRoute>
           <MyPlants></MyPlants>
