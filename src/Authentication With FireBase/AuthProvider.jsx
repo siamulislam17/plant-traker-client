@@ -52,6 +52,10 @@ const AuthProvider = ( {children} ) => {
         } 
     },[])  
 
+
+    //dark mode
+    const [darkMode, setDarkMode] = useState(false);
+
    const userData={
         createAccount,
         signInWithGoogle,
@@ -61,7 +65,9 @@ const AuthProvider = ( {children} ) => {
         LogIn,
         loading,
         setLoading,
-        updateProfileData
+        updateProfileData,
+        darkMode,
+        setDarkMode
     }
     return (
         <div>
