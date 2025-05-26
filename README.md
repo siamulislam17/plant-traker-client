@@ -1,12 +1,29 @@
-# React + Vite
+# 🌿 Plant Care Tracker — Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live URL:** [https://plant-tracker-web.web.app/](https://plant-tracker-web.web.app/)
 
-Currently, two official plugins are available:
+## 🪴 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Plant Care Tracker** is a beautifully themed, mobile-responsive web application designed to help plant enthusiasts monitor and manage the care of their indoor and outdoor plants. This app acts as a digital plant assistant, making it easier to track daily tasks and keep your plant babies thriving!
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🌱 **User Authentication** — Secure login and registration for personalized dashboards
+- 🗓️ **Task Tracking** — Log watering, fertilizing, and health checks per plant
+- 🧾 **CRUD Functionality** — Add, view, update, and delete your plant entries
+- 📱 **Fully Responsive** — Optimized for mobile, tablet, and desktop views
+- 🎨 **Themed UI** — Visually appealing design inspired by plant categories (e.g., succulents, ferns)
+
+## 🛠️ Technologies Used
+
+- React + Vite
+- Firebase Authentication & Hosting
+- DaisyUI + Tailwind CSS
+- React Router
+- MongoDB (via backend API)
+
+This is the **client-side** of the full-stack application. It connects to a Node.js + Express backend to manage plant data stored in MongoDB.
+
+---
+
+> 🧪 For best use, register an account and start logging your plants today at [plant-tracker-web.web.app](https://plant-tracker-web.web.app/)
