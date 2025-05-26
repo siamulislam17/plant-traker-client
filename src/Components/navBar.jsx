@@ -28,8 +28,25 @@ const Navbar = () => {
     { to: "/add-plant", label: "Add Plant" },
     { to: "/my-plants", label: "My Plants" },
   ];
+  const navLinks = <>
+
+    {navItems.map((item) => (
+      <NavLink
+        key={item.to}
+        to={item.to}
+        className={({ isActive }) =>
+          `hover:text-green-700 ${isActive ? "font-semibold underline" : ""}`
+        }
+      >
+        {item.label}
+      </NavLink>
+    ))}
+    
+    </>
 
   return (
+
+    
     <nav className="bg-green-100 text-green-900 shadow-md fixed w-full z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
@@ -84,6 +101,9 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+
+          
         </div>
 
         {/* Mobile Menu Icon */}
@@ -113,18 +133,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-green-50 px-4 pb-4 flex flex-col gap-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `text-lg border-b border-green-200 pb-1 hover:font-semibold ${isActive ? "text-green-700" : ""}`
-              }
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {navLinks }
           
 
           {user ? (

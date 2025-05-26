@@ -2,9 +2,9 @@ import { FaLeaf, FaCloud, FaHeart, FaWater } from 'react-icons/fa';
 
 const BenefitsSection = () => {
   return (
-    <section className="bg-green-50 py-12 md:py-20 md:h-140  px-4">
+    <section className="bg-green-50 dark:bg-gradient-to-tr from-gray-900 via to-slate-800 to-slate-900 py-12 md:py-20 md:h-140  px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-green-700 mb-8">Why Plant Trees?</h2>
+        <h2 className="text-3xl font-bold dark:text-white text-green-700 mb-8">Why Plant Trees?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
           <div className="bg-white shadow-md rounded-2xl p-6 hover:shadow-lg transition duration-300">

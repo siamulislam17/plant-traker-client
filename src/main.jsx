@@ -49,14 +49,14 @@ const router = createBrowserRouter([
       {
         path: "/plants",
         loader: async () => {
-          return fetch('http://localhost:3000/plants')
+          return fetch('https://plant-traker-server.vercel.app/plants')
         },
         element: <AllPlants></AllPlants>
       },
       {
         path: "/plants/:id",
         loader: async ({ params }) => {
-          return fetch(`http://localhost:3000/plants/${params.id}`)
+          return fetch(`https://plant-traker-server.vercel.app/plants/${params.id}`)
         },
         element: <PrivateRoute>
           <PlantsDetails></PlantsDetails>
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       {
         path: "/my-plants",
         loader: async () => {
-          return fetch('http://localhost:3000/plants')
+          return fetch('https://plant-traker-server.vercel.app/plants')
         },
         element: <PrivateRoute>
           <MyPlants></MyPlants>
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
       {
         path: '/update/:id',
         loader: async () => {
-          return fetch('http://localhost:3000/plants')
+          return fetch('https://plant-traker-server.vercel.app/plants')
         },
         element: <UpdatePage></UpdatePage>
       }

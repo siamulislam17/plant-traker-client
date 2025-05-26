@@ -33,7 +33,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="w-full px-6 py-16 bg-[#9ef68deb] md:py-32">
+    <div className="w-full px-6 py-16 dark:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 bg-[#9ef68deb] md:py-32">
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
         {/* Image Section */}
@@ -52,7 +52,7 @@ const Banner = () => {
           <h1 className="text-4xl rancho font-bold text-green-700 mb-4">
             {slides[current].title}
           </h1>
-          <p className="text-lg text-gray-700 mb-6">{slides[current].desc}</p>
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">{slides[current].desc}</p>
           
         </div>
       </div>

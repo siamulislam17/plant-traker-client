@@ -12,7 +12,7 @@ const addPlant = () => {
 
         
 
-        fetch('http://localhost:3000/plants', {
+        fetch('https://plant-traker-server.vercel.app/plants', {
 
             method: 'POST',
             headers: {
