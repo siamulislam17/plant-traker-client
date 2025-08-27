@@ -1,4 +1,4 @@
-// UpdatePage.jsx — React (JavaScript)
+
 import React, { useContext, useMemo, useState } from "react";
 import { useLoaderData, useParams, useNavigate } from "react-router";
 import Swal from "sweetalert2";

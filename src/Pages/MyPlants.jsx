@@ -1,4 +1,4 @@
-// MyPlants.jsx — React (JavaScript)
+
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";

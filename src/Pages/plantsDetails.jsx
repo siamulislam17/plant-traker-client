@@ -1,4 +1,4 @@
-// PlantDetails.jsx — React (JavaScript)
+
 import React, { useContext, useMemo } from "react";
 import { useLoaderData, Link } from "react-router"; 
 import { Sprout, Droplets, Info, Calendar, ArrowLeft } from "lucide-react";

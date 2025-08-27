@@ -1,4 +1,4 @@
-// AllPlants.jsx — React (JavaScript)
+
 import React, { useContext, useMemo, useState } from "react";
 import { useLoaderData, Link } from "react-router"; 
 import { FaEye, FaSearch, FaSort } from "react-icons/fa";
