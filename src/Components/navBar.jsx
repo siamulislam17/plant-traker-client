@@ -7,7 +7,6 @@ import { Moon, Sun } from "lucide-react";
 import Swal from "sweetalert2";
 import AuthContext from "../Authentication With FireBase/AuthContext";
 
-// tiny helper
 const cx = (...c) => c.filter(Boolean).join(" ");
 
 const NAV_ITEMS = [
@@ -24,29 +23,24 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const btnRef = useRef(null);
 
-  // Bar background + border vary by theme
+  // Strong emerald bars for both themes
   const barClass = useMemo(
     () =>
       cx(
-        "fixed inset-x-0 top-0 z-50 border-b backdrop-blur",
+        "fixed inset-x-0 top-0 z-50 border-b",
         darkMode
-          ? // DARK: deeper bg and higher contrast text/border
-            "bg-zinc-900/80 border-zinc-700"
-          : // LIGHT
-            "bg-white/70 border-zinc-200 shadow-[0_1px_0_0_rgba(0,0,0,0.03)]"
+          ? "bg-emerald-950 border-emerald-800 text-emerald-100"
+          : "bg-emerald-600 border-emerald-700 text-white shadow"
       ),
     [darkMode]
   );
 
-  const linkBase =
-    "text-sm font-medium transition-colors underline-offset-8 hover:underline";
-  const linkLight = "text-zinc-700 hover:text-emerald-700";
-  const linkDark = "text-zinc-200 hover:text-emerald-400";
+  const linkBase = "text-sm font-medium transition-colors underline-offset-8 hover:underline";
+  const linkLight = "text-white/90 hover:text-white";
+  const linkDark = "text-emerald-100/90 hover:text-emerald-50";
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+  // Close menu on route change
+  useEffect(() => setIsOpen(false), [location.pathname]);
 
   // ESC to close
   useEffect(() => {
@@ -59,9 +53,9 @@ const Navbar = () => {
   useEffect(() => {
     const onClick = (e) => {
       if (!isOpen) return;
-      const insidePanel = menuRef.current && menuRef.current.contains(e.target);
-      const onButton = btnRef.current && btnRef.current.contains(e.target);
-      if (!insidePanel && !onButton) setIsOpen(false);
+      const inside = menuRef.current && menuRef.current.contains(e.target);
+      const onBtn = btnRef.current && btnRef.current.contains(e.target);
+      if (!inside && !onBtn) setIsOpen(false);
     };
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
@@ -94,8 +88,8 @@ const Navbar = () => {
       className={cx(
         "inline-flex h-9 w-9 items-center justify-center rounded-lg ring-1 transition",
         darkMode
-          ? "ring-zinc-700 text-zinc-200 hover:bg-zinc-800"
-          : "ring-zinc-300 text-zinc-700 hover:bg-zinc-100"
+          ? "ring-emerald-800 text-emerald-100 hover:bg-emerald-900"
+          : "ring-white/40 text-white hover:bg-emerald-700/60"
       )}
     >
       {darkMode ? <Sun size={16} /> : <Moon size={16} />}
@@ -115,16 +109,11 @@ const Navbar = () => {
       <img
         src={user.photoURL}
         alt="User"
-        className="h-9 w-9 rounded-full object-cover ring-2 ring-emerald-500/40"
+        className="h-9 w-9 rounded-full object-cover ring-2 ring-white/40"
         referrerPolicy="no-referrer"
       />
     ) : (
-      <span
-        className={cx(
-          "inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold",
-          darkMode ? "bg-zinc-800 text-zinc-200" : "bg-emerald-100 text-emerald-700"
-        )}
-      >
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white text-xs font-semibold ring-2 ring-white/20">
         {initials}
       </span>
     );
@@ -135,9 +124,7 @@ const Navbar = () => {
       to={to}
       className={cx(
         "rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
-        darkMode
-          ? "bg-emerald-500 text-white hover:bg-emerald-600"
-          : "bg-emerald-600 text-white hover:bg-emerald-700"
+        darkMode ? "bg-emerald-600 text-white hover:bg-emerald-500" : "bg-white text-emerald-700 hover:bg-emerald-50"
       )}
     >
       {children}
@@ -150,8 +137,8 @@ const Navbar = () => {
       className={cx(
         "rounded-lg px-4 py-2 text-sm font-semibold ring-1 transition-colors",
         darkMode
-          ? "text-zinc-100 ring-zinc-700 hover:bg-zinc-800"
-          : "text-zinc-800 ring-zinc-300 hover:bg-zinc-100"
+          ? "text-emerald-100 ring-emerald-800 hover:bg-emerald-900"
+          : "text-white ring-white/40 hover:bg-emerald-700/60"
       )}
     >
       {children}
@@ -161,13 +148,7 @@ const Navbar = () => {
   const ActiveAwareLink = ({ to, label }) => (
     <NavLink
       to={to}
-      className={({ isActive }) =>
-        cx(
-          linkBase,
-          darkMode ? linkDark : linkLight,
-          isActive && (darkMode ? "text-emerald-400 underline" : "text-emerald-700 underline")
-        )
-      }
+      className={({ isActive }) => cx(linkBase, darkMode ? linkDark : linkLight, isActive && "underline")}
     >
       {label}
     </NavLink>
@@ -175,11 +156,12 @@ const Navbar = () => {
 
   return (
     <nav className={barClass} role="navigation" aria-label="Main">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+      {/* Relatively positioned bar with fixed height so the dropdown doesn't stretch it */}
+      <div className="relative mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 text-xl font-bold">
-          <GiPlantRoots className={darkMode ? "text-emerald-400" : "text-emerald-600"} size={28} />
-          <span className={darkMode ? "text-zinc-100" : "text-zinc-900"}>Plant Tracker</span>
+          <GiPlantRoots className="text-white" size={22} />
+          <span className="text-white leading-none">Plant Tracker</span>
         </Link>
 
         {/* Desktop nav */}
@@ -199,8 +181,8 @@ const Navbar = () => {
                 className={cx(
                   "rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
                   darkMode
-                    ? "text-zinc-100 ring-1 ring-zinc-700 hover:bg-zinc-800"
-                    : "text-zinc-800 ring-1 ring-zinc-300 hover:bg-zinc-100"
+                    ? "text-emerald-100 ring-1 ring-emerald-800 hover:bg-emerald-900"
+                    : "text-white ring-1 ring-white/40 hover:bg-emerald-700/60"
                 )}
               >
                 Log Out
@@ -215,7 +197,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           {user && <Avatar />}
           <button
@@ -225,92 +207,92 @@ const Navbar = () => {
             aria-expanded={isOpen}
             className={cx(
               "inline-flex h-9 w-9 items-center justify-center rounded-lg ring-1 transition",
-              darkMode
-                ? "ring-zinc-700 text-zinc-200 hover:bg-zinc-800"
-                : "ring-zinc-300 text-zinc-700 hover:bg-zinc-100"
+              darkMode ? "ring-emerald-800 text-emerald-100 hover:bg-emerald-900" : "ring-white/40 text-white hover:bg-emerald-700/60"
             )}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      <div
-        ref={menuRef}
-        className={cx(
-          "md:hidden origin-top overflow-hidden transition-all",
-          isOpen ? "pointer-events-auto scale-y-100 opacity-100" : "pointer-events-none scale-y-95 opacity-0",
-          darkMode ? "bg-zinc-900 text-zinc-200" : "bg-white text-zinc-800"
-        )}
-      >
+        {/* Mobile menu: ABSOLUTE under the bar; doesn't affect nav height */}
         <div
+          ref={menuRef}
           className={cx(
-            "mx-4 mb-4 rounded-xl border p-4",
-            darkMode ? "border-zinc-700" : "border-zinc-200"
+            "md:hidden absolute left-0 right-0 top-full origin-top rounded-b-xl transition-[opacity,transform,visibility]",
+            isOpen ? "visible opacity-100 scale-y-100" : "invisible opacity-0 scale-y-95",
+            darkMode ? "bg-emerald-950 text-emerald-100" : "bg-emerald-50 text-emerald-900",
+            "shadow-lg"
           )}
         >
-          <div className="flex flex-col gap-3">
-            {NAV_ITEMS.map((item) => (
-              <ActiveAwareLink key={item.to} to={item.to} label={item.label} />
-            ))}
-          </div>
+          <div
+            className={cx(
+              "mx-3 my-2 max-h-[70vh] overflow-y-auto rounded-lg border",
+              darkMode ? "border-emerald-800" : "border-emerald-200"
+            )}
+          >
+            <div className="flex flex-col gap-1 px-3 py-2">
+              {NAV_ITEMS.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cx(
+                      "block rounded-md px-2 py-1 text-sm",
+                      isActive
+                        ? darkMode
+                          ? "bg-emerald-800 text-white"
+                          : "bg-emerald-200 text-emerald-900"
+                        : darkMode
+                          ? "hover:bg-emerald-900/60"
+                          : "hover:bg-emerald-100"
+                    )
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
 
-          {/* Divider */}
-          <div className={cx("my-3 h-px", darkMode ? "bg-zinc-700" : "bg-zinc-200")} />
+            <div className={cx("mx-3 h-px", darkMode ? "bg-emerald-800" : "bg-emerald-200")} />
 
-          <div className="flex items-center justify-between">
-            {user ? (
-              <>
-                <div className="flex items-center gap-3">
-                  <Avatar />
-                  <div className={cx("text-sm", darkMode ? "text-zinc-300" : "text-zinc-700")}>
-                    {user.displayName || user.email}
-                  </div>
-                </div>
+            <div className="flex flex-col gap-2 px-3 py-2">
+              {user ? (
                 <button
                   onClick={handleLogout}
                   className={cx(
-                    "rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
-                    darkMode
-                      ? "text-zinc-100 ring-1 ring-zinc-700 hover:bg-zinc-800"
-                      : "text-zinc-800 ring-1 ring-zinc-300 hover:bg-zinc-100"
+                    "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+                    darkMode ? "bg-emerald-700 text-white hover:bg-emerald-600" : "bg-emerald-600 text-white hover:bg-emerald-700"
                   )}
                 >
                   Log Out
                 </button>
-              </>
-            ) : (
-              <div className="flex w-full items-center justify-between gap-2">
-                <Link
-                  to="/login"
-                  className={cx(
-                    "flex-1 rounded-lg px-4 py-2 text-center text-sm font-semibold ring-1 transition-colors",
-                    darkMode
-                      ? "text-zinc-100 ring-zinc-700 hover:bg-zinc-800"
-                      : "text-zinc-800 ring-zinc-300 hover:bg-zinc-100"
-                  )}
-                >
-                  Log In
-                </Link>
-                <Link
-                  to="/register"
-                  className={cx(
-                    "flex-1 rounded-lg px-4 py-2 text-center text-sm font-semibold transition-colors",
-                    darkMode
-                      ? "bg-emerald-500 text-white hover:bg-emerald-600"
-                      : "bg-emerald-600 text-white hover:bg-emerald-700"
-                  )}
-                >
-                  Sign Up
-                </Link>
-              </div>
-            )}
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className={cx(
+                      "rounded-lg px-3 py-1.5 text-center text-sm font-medium transition-colors",
+                      darkMode ? "bg-emerald-700 text-white hover:bg-emerald-600" : "bg-emerald-600 text-white hover:bg-emerald-700"
+                    )}
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    to="/register"
+                    className={cx(
+                      "rounded-lg px-3 py-1.5 text-center text-sm font-medium transition-colors",
+                      darkMode
+                        ? "bg-white text-emerald-800 hover:bg-emerald-50"
+                        : "bg-white text-emerald-700 border border-emerald-600 hover:bg-emerald-50"
+                    )}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Safe-area spacer */}
-        <div className="h-2" />
       </div>
     </nav>
   );
