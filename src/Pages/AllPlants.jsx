@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData, Link } from 'react-router';
 import { FaEye } from 'react-icons/fa';
+import AuthContext from '../Authentication With FireBase/AuthContext';
 
 const AllPlants = () => {
   const plants = useLoaderData();
+  const { darkMode } = useContext(AuthContext);
 
   return (
     <div className="p-4 pt-20">
